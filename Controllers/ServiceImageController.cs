@@ -1,0 +1,50 @@
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using WebApi.Entities;
+
+namespace WebApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ServiceImageController
+    {
+        private readonly ApplicationDbContext context;
+        private readonly PointyHandler _handler;
+
+        public ServiceImageController(ApplicationDbContext context)
+        {
+            this.context = context;
+            _handler = new PointyHandler(this.context);
+        }
+
+        [HttpGet]
+        public ICollection<ServiceImage> Get()
+        {
+            return _handler.GetAllServicesImages();
+        }
+
+        [HttpGet("{id}")]
+        public ServiceImage Get(int id)
+        {
+            return _handler.ServiceImageDetails(id);
+        }
+
+        [HttpPost]
+        public void Post(ServiceImage serviceImage)
+        {
+            _handler.AddServiceImage(serviceImage);
+        }
+
+        [HttpPut]
+        public void Put(ServiceImage serviceImage)
+        {
+            _handler.EditServiceImage(serviceImage);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _handler.DeleteServiceImage(id);
+        }
+    }
+}

@@ -1,0 +1,50 @@
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using WebApi.Entities;
+
+namespace WebApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class StaffTeamController
+    {
+        private readonly ApplicationDbContext context;
+        private readonly PointyHandler _handler;
+
+        public StaffTeamController(ApplicationDbContext context)
+        {
+            this.context = context;
+            _handler = new PointyHandler(this.context);
+        }
+
+        [HttpGet]
+        public ICollection<StaffTeam> Get()
+        {
+            return _handler.GetAllStaffTeams();
+        }
+
+        [HttpGet("{id}")]
+        public StaffTeam Get(int id)
+        {
+            return _handler.StaffTeamDetails(id);
+        }
+
+        [HttpPost]
+        public void Post(StaffTeam staffTeam)
+        {
+            _handler.AddStaffTeam(staffTeam);
+        }
+
+        [HttpPut]
+        public void Put(StaffTeam staffTeam)
+        {
+            _handler.EditStaffTeam(staffTeam);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _handler.DeleteStaffTeam(id);
+        }
+    }
+}
