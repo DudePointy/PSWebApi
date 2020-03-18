@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Entities
 {
     public class Service
     {
         public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public int Cost { get; set; }
         public int DeliveryDays { get; set; }
+        [Required]
         public int RankPoints { get; set; }
+        [Required]
         public string Description { get; set; }
         public string PrimaryImg { get; set; }
         public virtual SubCategory SubCategory { get; set; }
