@@ -15,7 +15,7 @@ namespace WebApi.Entities
         public virtual SubCategory SubCategory { get; set; }
         public int SubCategoryId { get; set; }
         public DateTime StartedOn { get; set; }
-        public virtual ApplicationUser Solutioner { get; set; }
+        public virtual User Solutioner { get; set; }
         public int SolutionerId { get; set; }
         public virtual ICollection<Contract> Contracts { get; set; }
         public virtual ICollection<Order> Orders { get; set; }

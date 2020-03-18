@@ -7,7 +7,7 @@ namespace WebApi.Entities
         public int Id { get; set; }
         public virtual Order Order { get; set; }
         public int OrderId { get; set; }
-        public virtual ApplicationUser Sender { get; set; }
+        public virtual User Sender { get; set; }
         public int SenderId { get; set; }
         public string FilePath { get; set; }
         public virtual FileType FileType { get; set; }

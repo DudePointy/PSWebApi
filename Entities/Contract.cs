@@ -7,7 +7,7 @@ namespace WebApi.Entities
         public int Id { get; set; }
         public virtual Service Service { get; set; }
         public int ServiceId { get; set; }
-        public virtual ApplicationUser Marketer { get; set; }
+        public virtual User Marketer { get; set; }
         public int MarketerId { get; set; }
         public string Title { get; set; }
         public string Details { get; set; }

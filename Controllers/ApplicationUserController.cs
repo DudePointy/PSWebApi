@@ -20,28 +20,28 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public ICollection<ApplicationUser> Get()
+        public ICollection<User> Get()
         {
             return context.ApplicationUsers.ToList();
         }
 
         [HttpGet("{id}")]
-        public ApplicationUser Get(int id)
+        public User Get(int id)
         {
             return context.ApplicationUsers.FirstOrDefault(a => a.Id == id);
         }
 
         [HttpPost]
-        public void Post(ApplicationUser applicationUser)
+        public void Post(User user)
         {
-            context.ApplicationUsers.Add(applicationUser);
+            context.ApplicationUsers.Add(user);
             context.SaveChanges();
         }
 
         [HttpPut]
-        public void Put(ApplicationUser applicationUser)
+        public void Put(User user)
         {
-            context.Entry(applicationUser).State = EntityState.Modified;
+            context.Entry(user).State = EntityState.Modified;
             context.SaveChanges();
         }
 

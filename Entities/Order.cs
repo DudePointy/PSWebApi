@@ -14,9 +14,9 @@ namespace WebApi.Entities
         public int OrderStatusId { get; set; }
         public virtual Service Service { get; set; }
         public int ServiceId { get; set; }
-        public virtual ApplicationUser Client { get; set; }
+        public virtual User Client { get; set; }
         public int ClientId { get; set; }
-        public virtual ApplicationUser StaffTeam { get; set; }
+        public virtual User StaffTeam { get; set; }
         public int StaffTeamId { get; set; }
         public DateTime StartedOn { get; set; }
         public virtual Payment Payment { get; set; }

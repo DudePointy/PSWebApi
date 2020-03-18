@@ -8,7 +8,7 @@ namespace WebApi.Entities
         public virtual Order Order { get; set; }
         public int OrderId { get; set; }
 
-        public virtual ApplicationUser Sender { get; set; }
+        public virtual User Sender { get; set; }
         public int SenderId { get; set; }
 
         public string Text { get; set; }

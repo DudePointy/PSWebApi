@@ -10,7 +10,7 @@ namespace WebApi.Entities
         public DateTime StartedOn { get; set; }
         public DateTime FinishedOn { get; set; }
         public string ImagePath { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public virtual User User { get; set; }
         public int UserId { get; set; }
     }
 }
