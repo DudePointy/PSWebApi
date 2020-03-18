@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentStatusController
+    public class PaymentStatusController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(PaymentStatus payment)
         {
-            _handler.AddPaymentStatus(payment);
+            if (ModelState.IsValid)
+                _handler.AddPaymentStatus(payment);
         }
 
         [HttpPut]
         public void Put(PaymentStatus payment)
         {
-            _handler.EditPaymentStatus(payment);
+            if (ModelState.IsValid)
+                _handler.EditPaymentStatus(payment);
         }
 
         [HttpDelete("{id}")]
