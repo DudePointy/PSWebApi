@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(Order order)
         {
-            _handler.AddOrder(order);
+            if (ModelState.IsValid)
+                _handler.AddOrder(order);
         }
 
         [HttpPut]
         public void Put(Order order)
         {
-            _handler.EditOrder(order);
+            if (ModelState.IsValid)
+                _handler.EditOrder(order);
         }
 
         [HttpDelete("{id}")]
