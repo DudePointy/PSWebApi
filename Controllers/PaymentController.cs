@@ -23,7 +23,7 @@ namespace WebApi.Controllers
             return _handler.GetAllPayments();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public Payment Get(int id)
         {
             return _handler.PaymentDetails(id);
