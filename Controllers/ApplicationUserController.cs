@@ -8,7 +8,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApplicationUserController
+    public class ApplicationUserController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -34,13 +34,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(User user)
         {
-            _handler.AddUser(user);
+            if (ModelState.IsValid)
+                _handler.AddUser(user);
         }
 
         [HttpPut]
         public void Put(User user)
         {
-            _handler.EditUser(user);
+            if (ModelState.IsValid)
+                _handler.EditUser(user);
         }
 
         [HttpDelete("{id}")]
