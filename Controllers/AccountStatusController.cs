@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountStatusController
+    public class AccountStatusController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -33,13 +33,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(AccountStatus accountStatus)
         {
-            _handler.AddAccountStatus(accountStatus);
+            if (ModelState.IsValid)
+                _handler.AddAccountStatus(accountStatus);
         }
 
         [HttpPut]
         public void Put(AccountStatus accountStatus)
         {
-            _handler.EditAccountStatus(accountStatus);
+            if (ModelState.IsValid)
+                _handler.EditAccountStatus(accountStatus);
         }
 
         [HttpDelete("{id}")]
