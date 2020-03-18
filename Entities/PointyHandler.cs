@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Entities
 {
@@ -1133,7 +1133,7 @@ namespace WebApi.Entities
         }
         public ICollection<UserSkill> GetAllUserSkills(int id)
         {
-            return db.UserSkills.Where(u=>u.UserId == id).ToList();
+            return db.UserSkills.Where(u => u.UserId == id).ToList();
         }
 
         public UserSkill UserSkillDetails(int id)
@@ -1154,6 +1154,50 @@ namespace WebApi.Entities
 
 
 
+
+        #endregion
+
+        #region User
+
+
+        public void AddUser(User user)
+        {
+            db.ApplicationUsers.Add(user);
+            db.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var user = db.ApplicationUsers.FirstOrDefault(u => u.Id == id);
+            if (user != null)
+            {
+                db.ApplicationUsers.Remove(user);
+                db.SaveChanges();
+            }
+        }
+
+        public ICollection<User> GetAllUsers()
+        {
+            return db.ApplicationUsers.ToList();
+        }
+
+        public User UserDetails(int id)
+        {
+            return db.ApplicationUsers
+                .Include(u => u.Certificates)
+                .Include(u => u.Contracts)
+                .Include(u => u.Services)
+                .Include(u => u.OrderChats)
+                .Include(u => u.StaffTeams)
+                .Include(u => u.UserSkills)
+                .FirstOrDefault(u => u.Id == id);
+        }
+
+        public void EditUser(User user)
+        {
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
 
         #endregion
 
