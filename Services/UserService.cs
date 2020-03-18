@@ -24,16 +24,13 @@ namespace WebApi.Services
 
         private readonly ApplicationDbContext db;
 
-        public UserService(ApplicationDbContext context)
-        {
-            db = context;
-        }
-
         private readonly AppSettings _appSettings;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public UserService(IOptions<AppSettings> appSettings, ApplicationDbContext context)
         {
             _appSettings = appSettings.Value;
+            db = context;
+
         }
 
         public User Authenticate(string username, string password)
