@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MessageAttachmentController
+    public class MessageAttachmentController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(MessageAttachment message)
         {
-            _handler.AddMessageAttachment(message);
+            if (ModelState.IsValid)
+                _handler.AddMessageAttachment(message);
         }
 
         [HttpPut]
         public void Put(MessageAttachment message)
         {
-            _handler.EditMessageAttachment(message);
+            if (ModelState.IsValid)
+                _handler.EditMessageAttachment(message);
         }
 
         [HttpDelete("{id}")]
