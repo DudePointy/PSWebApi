@@ -22,35 +22,31 @@ namespace WebApi.Controllers
         [HttpGet]
         public ICollection<User> Get()
         {
-            return context.ApplicationUsers.ToList();
+            return _handler.GetAllUsers();
         }
 
         [HttpGet("{id}")]
         public User Get(int id)
         {
-            return context.ApplicationUsers.FirstOrDefault(a => a.Id == id);
+            return _handler.UserDetails(id);
         }
 
         [HttpPost]
         public void Post(User user)
         {
-            context.ApplicationUsers.Add(user);
-            context.SaveChanges();
+            _handler.AddUser(user);
         }
 
         [HttpPut]
         public void Put(User user)
         {
-            context.Entry(user).State = EntityState.Modified;
-            context.SaveChanges();
+            _handler.EditUser(user);
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var user = context.ApplicationUsers.FirstOrDefault(a => a.Id == id);
-            if (user != null)
-                context.ApplicationUsers.Remove(user);
+            _handler.DeleteUser(id);
         }
     }
 }
