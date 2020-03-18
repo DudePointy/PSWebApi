@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MessageController
+    public class MessageController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(Message message)
         {
-            _handler.AddMessage(message);
+            if (ModelState.IsValid)
+                _handler.AddMessage(message);
         }
 
         [HttpPut]
         public void Put(Message message)
         {
-            _handler.EditMessage(message);
+            if (ModelState.IsValid)
+                _handler.EditMessage(message);
         }
 
         [HttpDelete("{id}")]
