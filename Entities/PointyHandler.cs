@@ -1166,7 +1166,7 @@ namespace WebApi.Entities
             db.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void DeleteUser(int id)
         {
             var user = db.ApplicationUsers.FirstOrDefault(u => u.Id == id);
             if (user != null)
