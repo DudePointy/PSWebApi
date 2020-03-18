@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderStatusController
+    public class OrderStatusController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(OrderStatus orderStatus)
         {
-            _handler.AddOrderStatus(orderStatus);
+            if (ModelState.IsValid)
+                _handler.AddOrderStatus(orderStatus);
         }
 
         [HttpPut]
         public void Put(OrderStatus orderStatus)
         {
-            _handler.EditOrderStatus(orderStatus);
+            if (ModelState.IsValid)
+                _handler.EditOrderStatus(orderStatus);
         }
 
         [HttpDelete("{id}")]
