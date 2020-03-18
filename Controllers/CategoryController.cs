@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(Category category)
         {
-            _handler.AddCategory(category);
+            if (ModelState.IsValid)
+                _handler.AddCategory(category);
         }
 
         [HttpPut]
         public void Put(Category category)
         {
-            _handler.EditCategory(category);
+            if (ModelState.IsValid)
+                _handler.EditCategory(category);
         }
 
         [HttpDelete("{id}")]
