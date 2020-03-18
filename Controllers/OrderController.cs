@@ -17,13 +17,13 @@ namespace WebApi.Controllers
             _handler = new PointyHandler(this.context);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public ICollection<Order> Get()
         {
             return _handler.GetAllOrders();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public Order Get(int id)
         {
             return _handler.OrderDetails(id);
