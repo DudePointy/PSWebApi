@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentController
+    public class PaymentController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(Payment payment)
         {
-            _handler.AddPayment(payment);
+            if (ModelState.IsValid)
+                _handler.AddPayment(payment);
         }
 
         [HttpPut]
         public void Put(Payment payment)
         {
-            _handler.EditPayment(payment);
+            if (ModelState.IsValid)
+                _handler.EditPayment(payment);
         }
 
         [HttpDelete("{id}")]
