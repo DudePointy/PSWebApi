@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SubCategoryController
+    public class SubCategoryController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(SubCategory subCategory)
         {
-            _handler.AddSubCategory(subCategory);
+            if (ModelState.IsValid)
+                _handler.AddSubCategory(subCategory);
         }
 
         [HttpPut]
         public void Put(SubCategory subCategory)
         {
-            _handler.EditSubCategory(subCategory);
+            if (ModelState.IsValid)
+                _handler.EditSubCategory(subCategory);
         }
 
         [HttpDelete("{id}")]
