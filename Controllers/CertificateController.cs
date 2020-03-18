@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CertificateController
+    public class CertificateController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -33,13 +33,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(Certificate certificate)
         {
-            _handler.AddCertificate(certificate);
+            if (ModelState.IsValid)
+                _handler.AddCertificate(certificate);
         }
 
         [HttpPut]
         public void Put(Certificate certificate)
         {
-            _handler.EditCertificate(certificate);
+            if (ModelState.IsValid)
+                _handler.EditCertificate(certificate);
         }
 
         [HttpDelete("{id}")]
