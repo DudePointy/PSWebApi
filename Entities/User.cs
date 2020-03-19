@@ -15,10 +15,20 @@ namespace WebApi.Entities
         [Required]
         public string Username { get; set; }
         [Required]
+        public string Email { get; set; }
+        [Required]
         public string Password { get; set; }
         public string Token { get; set; }
         public virtual Role Role { get; set; }
         public int RoleId { get; set; }
+        public virtual Country Country { get; set; }
+        public int CountryId { get; set; }
+        public virtual User Referral { get; set; }
+        public int? ReferralId { get; set; }
+        public string Phone { get; set; }
+        public virtual AccountStatus AccountStatus { get; set; }
+        public int AccountStatusId { get; set; }
+        public DateTime JoinDate { get; set; }
         public virtual ICollection<Certificate> Certificates { get; set; }
         public virtual ICollection<Contract> Contracts { get; set; }
         public virtual ICollection<Service> Services { get; set; }
