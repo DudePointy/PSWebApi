@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Entities;
 using WebApi.Models;
@@ -12,10 +13,11 @@ namespace WebApi.Controllers
     public class UserController : ControllerBase
     {
         private IUserService _userService;
-
-        public UserController(IUserService userService)
+        private PointyHandler _handler;
+        public UserController(IUserService userService, ApplicationDbContext context)
         {
             _userService = userService;
+            _handler = new PointyHandler(context);
         }
 
         [AllowAnonymous]
@@ -42,6 +44,15 @@ namespace WebApi.Controllers
             return BadRequest(new { message = "Invalid Register request" });
         }
 
+        public IActionResult Activation()
+        {
+            var currentUserId = int.Parse(User.Identity.Name);
+            var user = _handler.UserDetails(currentUserId);
+            user.AccountStatusId = _handler.GetAllAccountStatuses().First(c => c.Name.ToLower() == "activated").Id;
+            _handler.EditUser(user);
+            return Ok();
+
+        }
         //TODO [Authorize(Roles = )]
         [HttpGet]
         public IActionResult GetAll()
