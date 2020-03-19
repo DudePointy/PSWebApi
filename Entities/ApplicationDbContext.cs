@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace WebApi.Entities
 {
@@ -39,5 +40,17 @@ namespace WebApi.Entities
         public DbSet<UserSkill> UserSkills { get; set; }
         public DbSet<WorkDone> WorkDone { get; set; }
         public DbSet<WorkImage> WorkImages { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.NoAction;
+            }
+
+            base.OnModelCreating(modelBuilder);
+
+        }
     }
 }
