@@ -10,6 +10,7 @@ namespace WebApi.Entities
         }
 
 
+        public DbSet<Role> Roles { get; set; }
         public DbSet<User> ApplicationUsers { get; set; }
         public DbSet<AccountStatus> AccountStatuses { get; set; }
         public DbSet<Category> Categories { get; set; }

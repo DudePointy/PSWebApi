@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,8 +16,9 @@ namespace WebApi.Entities
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
-        public string Role { get; set; }
         public string Token { get; set; }
+        public virtual Role Role { get; set; }
+        public int RoleId { get; set; }
         public virtual ICollection<Certificate> Certificates { get; set; }
         public virtual ICollection<Contract> Contracts { get; set; }
         public virtual ICollection<Service> Services { get; set; }
