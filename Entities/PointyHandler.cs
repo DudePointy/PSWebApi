@@ -12,6 +12,46 @@ namespace WebApi.Entities
         {
             db = context;
         }
+        #region Country
+
+
+        public void AddCountry(Country country)
+        {
+            db.Countries.Add(country);
+            db.SaveChanges();
+        }
+
+        public void DeleteCountry(int id)
+        {
+            var country = db.Countries.FirstOrDefault(c => c.Id == id);
+            if (country != null)
+            {
+                db.Countries.Remove(country);
+                db.SaveChanges();
+            }
+        }
+
+        public ICollection<Country> GetAllCountries()
+        {
+            return db.Countries.ToList();
+        }
+
+        public Country CountryDetails(int id)
+        {
+            return db.Countries.FirstOrDefault(c => c.Id == id);
+        }
+
+        public void EditCountry(Country country)
+        {
+            var countryInDb = db.Countries.FirstOrDefault(c => c.Id == country.Id);
+            if (countryInDb != null)
+            {
+                countryInDb.Name = country.Name;
+                db.SaveChanges();
+            }
+        }
+
+        #endregion
 
         #region AccountStatus
 
