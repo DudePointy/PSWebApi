@@ -53,6 +53,13 @@ namespace WebApi.Controllers
             return Ok();
 
         }
+
+        [HttpPut]
+        public IActionResult Edit(User user)
+        {
+            _handler.EditUser(user);
+            return Ok();
+        }
         //TODO [Authorize(Roles = )]
         [HttpGet]
         public IActionResult GetAll()
