@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using WebApi.Services;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApi.Entities;
 using WebApi.Models;
+using WebApi.Services;
 
 namespace WebApi.Controllers
 {
@@ -30,11 +30,23 @@ namespace WebApi.Controllers
             return Ok(user);
         }
 
+        [AllowAnonymous]
+        [HttpPost("Register")]
+        public IActionResult Register([FromBody]User user)
+        {
+            if (ModelState.IsValid)
+            {
+                _userService.Register(user);
+                return Ok();
+            }
+            return BadRequest(new { message = "Invalid Register request" });
+        }
+
         //TODO [Authorize(Roles = )]
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users =  _userService.GetAll();
+            var users = _userService.GetAll();
             return Ok(users);
         }
 
@@ -46,7 +58,7 @@ namespace WebApi.Controllers
             if (id != currentUserId && !User.IsInRole("Admin")) //TODO replace hard coded Role
                 return Forbid();
 
-            var user =  _userService.GetById(id);
+            var user = _userService.GetById(id);
 
             if (user == null)
                 return NotFound();
