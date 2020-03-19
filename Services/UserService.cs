@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -5,10 +6,11 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Helpers;
 
@@ -32,9 +34,33 @@ namespace WebApi.Services
         public User Register(User user)
         {
             user.Password = Encrypt(user.Password);
-            user.RoleId = 1;
+            user.RoleId = 1;//TODO Remove in production
+            user.AccountStatusId = 1;// 1 represents non activated account
             db.ApplicationUsers.Add(user);
             db.SaveChanges();
+            var fromAddress = new MailAddress("from@gmail.com", "From Name");
+            var toAddress = new MailAddress("to@yahoo.com", "To Name");
+            const string fromPassword = "password";
+            const string subject = "test";
+            const string body = "Hey now!!";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
+                Timeout = 20000
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(message);
+            }
             return Authenticate(user.Username, user.Password);
 
         }
@@ -48,7 +74,7 @@ namespace WebApi.Services
 
         public User Authenticate(string username, string password)
         {
-            var user = db.ApplicationUsers.Include(u=>u.Role).SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = db.ApplicationUsers.Include(u => u.Role).SingleOrDefault(x => x.Username == username && x.Password == password);
 
             // return null if user not found
             if (user == null)
@@ -117,5 +143,6 @@ namespace WebApi.Services
             System.Text.Encoding encoding = System.Text.Encoding.UTF8;
             return encoding.GetString(ms.ToArray());
         }
+
     }
 }
