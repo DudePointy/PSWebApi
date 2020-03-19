@@ -37,7 +37,7 @@ namespace WebApi.Controllers
             if (ModelState.IsValid)
             {
                 _userService.Register(user);
-                return Ok();
+                return Ok(user);
             }
             return BadRequest(new { message = "Invalid Register request" });
         }

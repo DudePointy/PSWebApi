@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Helpers;
 
@@ -34,7 +35,7 @@ namespace WebApi.Services
             user.RoleId = 1;
             db.ApplicationUsers.Add(user);
             db.SaveChanges();
-            return Authenticate(user.Username, Decrypt(user.Password));
+            return Authenticate(user.Username, user.Password);
 
         }
 
@@ -47,7 +48,7 @@ namespace WebApi.Services
 
         public User Authenticate(string username, string password)
         {
-            var user = db.ApplicationUsers.SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = db.ApplicationUsers.Include(u=>u.Role).SingleOrDefault(x => x.Username == username && x.Password == password);
 
             // return null if user not found
             if (user == null)
