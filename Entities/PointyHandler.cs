@@ -12,6 +12,51 @@ namespace WebApi.Entities
         {
             db = context;
         }
+
+        #region Role
+
+
+        public void AddRole(Role role)
+        {
+            db.Roles.Add(role);
+            db.SaveChanges();
+        }
+
+        public void DeleteRole(int id)
+        {
+            var role = db.Roles.FirstOrDefault(r => r.Id == id);
+            if (role != null)
+            {
+                db.Roles.Remove(role);
+                db.SaveChanges();
+            }
+        }
+
+        public ICollection<Role> GetAllRoles()
+        {
+            return db.Roles.ToList();
+        }
+
+        public Role RoleDetails(int id)
+        {
+            return db.Roles.FirstOrDefault(r => r.Id == id);
+        }
+
+        public void EditRole(Role role)
+        {
+            var roleInDb = db.Roles.FirstOrDefault(r => r.Id == role.Id);
+            if (roleInDb != null)
+            {
+                roleInDb.Name = role.Name;
+                db.SaveChanges();
+            }
+        }
+
+
+
+
+        #endregion
+
         #region Country
 
 
