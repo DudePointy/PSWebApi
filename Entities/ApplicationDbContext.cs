@@ -54,6 +54,11 @@ namespace WebApi.Entities
             modelBuilder.Entity<User>(entity => {
                 entity.HasIndex(e => e.Username).IsUnique();
             });
+
+            modelBuilder.Entity<User>(entity => {
+                entity.HasIndex(e => e.Phone).IsUnique();
+            });
+
             base.OnModelCreating(modelBuilder);
 
         }

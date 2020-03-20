@@ -59,7 +59,7 @@ namespace WebApi.Services
                 Body = body
             })
             {
-                smtp.Send(message);
+               //TODO smtp.Send(message);
             }
             return Authenticate(user.Username, user.Password);
 
