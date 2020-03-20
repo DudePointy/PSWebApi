@@ -48,7 +48,12 @@ namespace WebApi.Entities
             {
                 relationship.DeleteBehavior = DeleteBehavior.NoAction;
             }
-
+            modelBuilder.Entity<User>(entity => {
+                entity.HasIndex(e => e.Email).IsUnique();
+            });
+            modelBuilder.Entity<User>(entity => {
+                entity.HasIndex(e => e.Username).IsUnique();
+            });
             base.OnModelCreating(modelBuilder);
 
         }

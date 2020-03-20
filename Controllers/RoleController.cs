@@ -25,7 +25,7 @@ namespace WebApi.Controllers
             return _handler.GetAllRoles();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public Role Get(int id)
         {
             return _handler.RoleDetails(id);
@@ -43,7 +43,7 @@ namespace WebApi.Controllers
             _handler.EditRole(role);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public void Delete(int id)
         {
             _handler.DeleteRole(id);
