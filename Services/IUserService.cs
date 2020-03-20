@@ -9,5 +9,6 @@ namespace WebApi.Services
         IEnumerable<User> GetAll();
         User GetById(int id);
         User Register(User user);
+        void ChangePassword(string email);
     }
 }

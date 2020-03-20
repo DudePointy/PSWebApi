@@ -1,6 +1,7 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 using WebApi.Entities;
 using WebApi.Models;
 using WebApi.Services;
@@ -55,7 +56,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit(User user)
+        public IActionResult Edit([FromBody]User user)
         {
             _handler.EditUser(user);
             return Ok();
@@ -66,6 +67,21 @@ namespace WebApi.Controllers
         {
             var users = _userService.GetAll();
             return Ok(users);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult ForgetPassword([FromBody]string email)
+        {
+            var user = _userService.GetAll().Single(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+            if (user != null)
+            {
+                _userService.ChangePassword(email);
+                return Ok();
+            }
+
+            return NotFound();
+
         }
 
         [HttpGet("{id}")]
