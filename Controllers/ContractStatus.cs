@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ContractStatusController
+    public class ContractStatusController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -34,14 +34,16 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(ContractStatus contractStatus)
         {
-            _handler.AddContractStatus(contractStatus);
+            if (ModelState.IsValid)
+                _handler.AddContractStatus(contractStatus);
         }
 
         [HttpPut]
 
         public void Put(ContractStatus contractStatus)
         {
-            _handler.EditContractStatus(contractStatus);
+            if (ModelState.IsValid)
+                _handler.EditContractStatus(contractStatus);
         }
 
         [HttpDelete("{id}")]

@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SkillController
+    public class SkillController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -33,13 +33,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(Skill skill)
         {
-            _handler.AddSkill(skill);
+            if (ModelState.IsValid)
+                _handler.AddSkill(skill);
         }
 
         [HttpPut]
         public void Put(Skill skill)
         {
-            _handler.EditSkill(skill);
+            if (ModelState.IsValid)
+                _handler.EditSkill(skill);
         }
 
         [HttpDelete("{id}")]

@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ServiceImageController
+    public class ServiceImageController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(ServiceImage serviceImage)
         {
-            _handler.AddServiceImage(serviceImage);
+            if (ModelState.IsValid)
+                _handler.AddServiceImage(serviceImage);
         }
 
         [HttpPut]
         public void Put(ServiceImage serviceImage)
         {
-            _handler.EditServiceImage(serviceImage);
+            if (ModelState.IsValid)
+                _handler.EditServiceImage(serviceImage);
         }
 
         [HttpDelete("{id}")]

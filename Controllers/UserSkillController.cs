@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserSkillController
+    public class UserSkillController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(UserSkill skill)
         {
-            _handler.AddUserSkill(skill);
+            if (ModelState.IsValid)
+                _handler.AddUserSkill(skill);
         }
 
         [HttpPut]
         public void Put(UserSkill skill)
         {
-            _handler.EditUserSkill(skill);
+            if (ModelState.IsValid)
+                _handler.EditUserSkill(skill);
         }
 
         [HttpDelete("{id}")]

@@ -6,47 +6,47 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderStatusController : ControllerBase
+    public class RoleController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
 
-        public OrderStatusController(ApplicationDbContext context)
+        public RoleController(ApplicationDbContext context)
         {
             this.context = context;
             _handler = new PointyHandler(this.context);
         }
 
+
+
         [HttpGet]
-        public ICollection<OrderStatus> Get()
+        public ICollection<Role> Get()
         {
-            return _handler.GetAllOrderStatuses();
+            return _handler.GetAllRoles();
         }
 
         [HttpGet("{id}")]
-        public OrderStatus Get(int id)
+        public Role Get(int id)
         {
-            return _handler.OrderStatusDetails(id);
+            return _handler.RoleDetails(id);
         }
 
         [HttpPost]
-        public void Post(OrderStatus orderStatus)
+        public void Post(Role role)
         {
-            if (ModelState.IsValid)
-                _handler.AddOrderStatus(orderStatus);
+            _handler.AddRole(role);
         }
 
         [HttpPut]
-        public void Put(OrderStatus orderStatus)
+        public void Put(Role role)
         {
-            if (ModelState.IsValid)
-                _handler.EditOrderStatus(orderStatus);
+            _handler.EditRole(role);
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            _handler.DeleteOrderStatus(id);
+            _handler.DeleteRole(id);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WorkDoneController
+    public class WorkDoneController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -33,13 +33,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(WorkDone workDone)
         {
-            _handler.AddWorkDone(workDone);
+            if (ModelState.IsValid)
+                _handler.AddWorkDone(workDone);
         }
 
         [HttpPut]
         public void Put(WorkDone workDone)
         {
-            _handler.EditWorkDone(workDone);
+            if (ModelState.IsValid)
+                _handler.EditWorkDone(workDone);
         }
 
         [HttpDelete("{id}")]

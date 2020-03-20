@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Entities
 {
@@ -12,6 +12,91 @@ namespace WebApi.Entities
         {
             db = context;
         }
+
+        #region Role
+
+
+        public void AddRole(Role role)
+        {
+            db.Roles.Add(role);
+            db.SaveChanges();
+        }
+
+        public void DeleteRole(int id)
+        {
+            var role = db.Roles.FirstOrDefault(r => r.Id == id);
+            if (role != null)
+            {
+                db.Roles.Remove(role);
+                db.SaveChanges();
+            }
+        }
+
+        public ICollection<Role> GetAllRoles()
+        {
+            return db.Roles.ToList();
+        }
+
+        public Role RoleDetails(int id)
+        {
+            return db.Roles.FirstOrDefault(r => r.Id == id);
+        }
+
+        public void EditRole(Role role)
+        {
+            var roleInDb = db.Roles.FirstOrDefault(r => r.Id == role.Id);
+            if (roleInDb != null)
+            {
+                roleInDb.Name = role.Name;
+                db.SaveChanges();
+            }
+        }
+
+
+
+
+        #endregion
+
+        #region Country
+
+
+        public void AddCountry(Country country)
+        {
+            db.Countries.Add(country);
+            db.SaveChanges();
+        }
+
+        public void DeleteCountry(int id)
+        {
+            var country = db.Countries.FirstOrDefault(c => c.Id == id);
+            if (country != null)
+            {
+                db.Countries.Remove(country);
+                db.SaveChanges();
+            }
+        }
+
+        public ICollection<Country> GetAllCountries()
+        {
+            return db.Countries.ToList();
+        }
+
+        public Country CountryDetails(int id)
+        {
+            return db.Countries.FirstOrDefault(c => c.Id == id);
+        }
+
+        public void EditCountry(Country country)
+        {
+            var countryInDb = db.Countries.FirstOrDefault(c => c.Id == country.Id);
+            if (countryInDb != null)
+            {
+                countryInDb.Name = country.Name;
+                db.SaveChanges();
+            }
+        }
+
+        #endregion
 
         #region AccountStatus
 
@@ -1133,7 +1218,7 @@ namespace WebApi.Entities
         }
         public ICollection<UserSkill> GetAllUserSkills(int id)
         {
-            return db.UserSkills.Where(u=>u.UserId == id).ToList();
+            return db.UserSkills.Where(u => u.UserId == id).ToList();
         }
 
         public UserSkill UserSkillDetails(int id)
@@ -1154,6 +1239,50 @@ namespace WebApi.Entities
 
 
 
+
+        #endregion
+
+        #region User
+
+
+        public void AddUser(User user)
+        {
+            db.ApplicationUsers.Add(user);
+            db.SaveChanges();
+        }
+
+        public void DeleteUser(int id)
+        {
+            var user = db.ApplicationUsers.FirstOrDefault(u => u.Id == id);
+            if (user != null)
+            {
+                db.ApplicationUsers.Remove(user);
+                db.SaveChanges();
+            }
+        }
+
+        public ICollection<User> GetAllUsers()
+        {
+            return db.ApplicationUsers.ToList();
+        }
+
+        public User UserDetails(int id)
+        {
+            return db.ApplicationUsers
+                .Include(u => u.Certificates)
+                .Include(u => u.Contracts)
+                .Include(u => u.Services)
+                .Include(u => u.OrderChats)
+                .Include(u => u.StaffTeams)
+                .Include(u => u.UserSkills)
+                .FirstOrDefault(u => u.Id == id);
+        }
+
+        public void EditUser(User user)
+        {
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
 
         #endregion
 

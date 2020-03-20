@@ -8,7 +8,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApplicationUserController
+    public class ApplicationUserController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -20,37 +20,35 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public ICollection<ApplicationUser> Get()
+        public ICollection<User> Get()
         {
-            return context.ApplicationUsers.ToList();
+            return _handler.GetAllUsers();
         }
 
         [HttpGet("{id}")]
-        public ApplicationUser Get(int id)
+        public User Get(int id)
         {
-            return context.ApplicationUsers.FirstOrDefault(a => a.Id == id);
+            return _handler.UserDetails(id);
         }
 
         [HttpPost]
-        public void Post(ApplicationUser applicationUser)
+        public void Post(User user)
         {
-            context.ApplicationUsers.Add(applicationUser);
-            context.SaveChanges();
+            if (ModelState.IsValid)
+                _handler.AddUser(user);
         }
 
         [HttpPut]
-        public void Put(ApplicationUser applicationUser)
+        public void Put(User user)
         {
-            context.Entry(applicationUser).State = EntityState.Modified;
-            context.SaveChanges();
+            if (ModelState.IsValid)
+                _handler.EditUser(user);
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var user = context.ApplicationUsers.FirstOrDefault(a => a.Id == id);
-            if (user != null)
-                context.ApplicationUsers.Remove(user);
+            _handler.DeleteUser(id);
         }
     }
 }

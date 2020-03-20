@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WorkImageController
+    public class WorkImageController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(WorkImage workImage)
         {
-            _handler.AddWorkImage(workImage);
+            if (ModelState.IsValid)
+                _handler.AddWorkImage(workImage);
         }
 
         [HttpPut]
         public void Put(WorkImage workImage)
         {
-            _handler.EditWorkImage(workImage);
+            if (ModelState.IsValid)
+                _handler.EditWorkImage(workImage);
         }
 
         [HttpDelete("{id}")]

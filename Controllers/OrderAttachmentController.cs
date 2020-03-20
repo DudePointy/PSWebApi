@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderAttachmentController
+    public class OrderAttachmentController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -31,13 +31,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(OrderAttachment orderAttachment)
         {
-            _handler.AddOrderAttachment(orderAttachment);
+            if (ModelState.IsValid)
+                _handler.AddOrderAttachment(orderAttachment);
         }
 
         [HttpPut]
         public void Put(OrderAttachment orderAttachment)
         {
-            _handler.EditOrderAttachment(orderAttachment);
+            if (ModelState.IsValid)
+                _handler.EditOrderAttachment(orderAttachment);
         }
 
         [HttpDelete("{id}")]

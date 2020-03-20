@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace WebApi.Entities
 {
@@ -10,7 +11,8 @@ namespace WebApi.Entities
         }
 
 
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<User> ApplicationUsers { get; set; }
         public DbSet<AccountStatus> AccountStatuses { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
@@ -38,5 +40,27 @@ namespace WebApi.Entities
         public DbSet<UserSkill> UserSkills { get; set; }
         public DbSet<WorkDone> WorkDone { get; set; }
         public DbSet<WorkImage> WorkImages { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.NoAction;
+            }
+            modelBuilder.Entity<User>(entity => {
+                entity.HasIndex(e => e.Email).IsUnique();
+            });
+            modelBuilder.Entity<User>(entity => {
+                entity.HasIndex(e => e.Username).IsUnique();
+            });
+
+            modelBuilder.Entity<User>(entity => {
+                entity.HasIndex(e => e.Phone).IsUnique();
+            });
+
+            base.OnModelCreating(modelBuilder);
+
+        }
     }
 }

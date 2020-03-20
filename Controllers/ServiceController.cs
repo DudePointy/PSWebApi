@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(Service service)
         {
-            _handler.AddService(service);
+            if (ModelState.IsValid)
+                _handler.AddService(service);
         }
 
         [HttpPut]
         public void Put(Service service)
         {
-            _handler.EditService(service);
+            if (ModelState.IsValid)
+                _handler.EditService(service);
         }
 
         [HttpDelete("{id}")]

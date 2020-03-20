@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderMessageController
+    public class OrderMessageController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(OrderMessage orderMessage)
         {
-            _handler.AddOrderMessage(orderMessage);
+            if (ModelState.IsValid)
+                _handler.AddOrderMessage(orderMessage);
         }
 
         [HttpPut]
         public void Put(OrderMessage orderMessage)
         {
-            _handler.EditOrderMessage(orderMessage);
+            if (ModelState.IsValid)
+                _handler.EditOrderMessage(orderMessage);
         }
 
         [HttpDelete("{id}")]

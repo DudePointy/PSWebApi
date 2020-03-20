@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FeedBackController
+    public class FeedBackController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -33,13 +33,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(Feedback feedback)
         {
-            _handler.AddFeedback(feedback);
+            if (ModelState.IsValid)
+                _handler.AddFeedback(feedback);
         }
 
         [HttpPut]
         public void Put(Feedback feedback)
         {
-            _handler.EditFeedback(feedback);
+            if (ModelState.IsValid)
+                _handler.EditFeedback(feedback);
         }
 
         [HttpDelete("{id}")]

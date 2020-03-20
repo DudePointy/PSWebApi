@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StaffTeamController
+    public class StaffTeamController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -32,13 +32,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(StaffTeam staffTeam)
         {
-            _handler.AddStaffTeam(staffTeam);
+            if (ModelState.IsValid)
+                _handler.AddStaffTeam(staffTeam);
         }
 
         [HttpPut]
         public void Put(StaffTeam staffTeam)
         {
-            _handler.EditStaffTeam(staffTeam);
+            if (ModelState.IsValid)
+                _handler.EditStaffTeam(staffTeam);
         }
 
         [HttpDelete("{id}")]

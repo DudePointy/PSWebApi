@@ -6,7 +6,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EarningController
+    public class EarningController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly PointyHandler _handler;
@@ -33,13 +33,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public void Post(Earnings earnings)
         {
-            _handler.AddEarnings(earnings);
+            if (ModelState.IsValid)
+                _handler.AddEarnings(earnings);
         }
 
         [HttpPut]
         public void Put(Earnings earnings)
         {
-            _handler.EditEarnings(earnings);
+            if (ModelState.IsValid)
+                _handler.EditEarnings(earnings);
         }
 
         [HttpDelete("{id}")]
