@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class StaffTeamController : ControllerBase
     {

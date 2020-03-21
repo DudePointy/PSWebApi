@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
+
     public class MessageController : ControllerBase
     {
         private readonly ApplicationDbContext context;

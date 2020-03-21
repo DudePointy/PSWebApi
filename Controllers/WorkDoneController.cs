@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Entities;
 
@@ -6,6 +7,8 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
+
     public class WorkDoneController : ControllerBase
     {
         private readonly ApplicationDbContext context;

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class SubCategoryController : ControllerBase
