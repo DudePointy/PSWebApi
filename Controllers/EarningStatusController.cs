@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
@@ -30,6 +31,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public void Post(EarningStatus earningStatus)
         {
             if (ModelState.IsValid)
@@ -37,6 +39,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public void Put(EarningStatus earningStatus)
         {
             if (ModelState.IsValid)
@@ -44,6 +47,7 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public void Delete(int id)
         {
             _handler.DeleteEarningStatus(id);

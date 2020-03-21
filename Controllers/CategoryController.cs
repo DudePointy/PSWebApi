@@ -7,8 +7,6 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
-
     public class CategoryController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -33,6 +31,8 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public void Post(Category category)
         {
             if (ModelState.IsValid)
@@ -40,12 +40,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public void Put(Category category)
         {
             if (ModelState.IsValid)
                 _handler.EditCategory(category);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

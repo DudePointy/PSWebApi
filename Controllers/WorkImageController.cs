@@ -5,7 +5,6 @@ using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class WorkImageController : ControllerBase
@@ -30,7 +29,7 @@ namespace WebApi.Controllers
         {
             return _handler.WorkImageDetails(id);
         }
-
+        [Authorize(Roles = "Service Provider")]
         [HttpPost]
         public void Post(WorkImage workImage)
         {
@@ -39,12 +38,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Service Provider")]
         public void Put(WorkImage workImage)
         {
             if (ModelState.IsValid)
                 _handler.EditWorkImage(workImage);
         }
 
+        [Authorize(Roles = "Service Provider")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

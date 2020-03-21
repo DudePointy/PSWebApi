@@ -6,7 +6,7 @@ using WebApi.Entities;
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     [ApiController]
     public class OrderStatusController : ControllerBase
     {
@@ -32,6 +32,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public void Post(OrderStatus orderStatus)
         {
             if (ModelState.IsValid)
@@ -39,12 +40,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public void Put(OrderStatus orderStatus)
         {
             if (ModelState.IsValid)
                 _handler.EditOrderStatus(orderStatus);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

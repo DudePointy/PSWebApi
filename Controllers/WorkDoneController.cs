@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
-
     public class WorkDoneController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -34,12 +32,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Service Provider")]
         public void Post(WorkDone workDone)
         {
             if (ModelState.IsValid)
                 _handler.AddWorkDone(workDone);
         }
 
+        [Authorize(Roles = "Service Provider")]
         [HttpPut]
         public void Put(WorkDone workDone)
         {
@@ -47,6 +47,7 @@ namespace WebApi.Controllers
                 _handler.EditWorkDone(workDone);
         }
 
+        [Authorize(Roles = "Service Provider")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

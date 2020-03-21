@@ -7,7 +7,6 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
 
     public class RoleController : ControllerBase
     {
@@ -35,17 +34,20 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public void Post(Role role)
         {
             _handler.AddRole(role);
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public void Put(Role role)
         {
             _handler.EditRole(role);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

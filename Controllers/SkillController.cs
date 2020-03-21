@@ -7,8 +7,6 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
-
     public class SkillController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -34,6 +32,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public void Post(Skill skill)
         {
             if (ModelState.IsValid)
@@ -41,12 +40,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public void Put(Skill skill)
         {
             if (ModelState.IsValid)
                 _handler.EditSkill(skill);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

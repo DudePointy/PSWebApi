@@ -7,7 +7,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
 
     public class PaymentStatusController : ControllerBase
     {
@@ -33,6 +33,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public void Post(PaymentStatus payment)
         {
             if (ModelState.IsValid)
@@ -40,12 +41,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public void Put(PaymentStatus payment)
         {
             if (ModelState.IsValid)
                 _handler.EditPaymentStatus(payment);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

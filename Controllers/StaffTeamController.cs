@@ -6,7 +6,7 @@ using WebApi.Entities;
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Moderator")]
     [ApiController]
     public class StaffTeamController : ControllerBase
     {

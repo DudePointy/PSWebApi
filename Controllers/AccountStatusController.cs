@@ -5,7 +5,6 @@ using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountStatusController : ControllerBase
@@ -33,6 +32,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public void Post(AccountStatus accountStatus)
         {
             if (ModelState.IsValid)
@@ -40,6 +40,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public void Put(AccountStatus accountStatus)
         {
             if (ModelState.IsValid)
@@ -47,6 +48,7 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public void Delete(int id)
         {
             _handler.DeleteAccountStatus(id);

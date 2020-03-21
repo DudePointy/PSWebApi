@@ -7,8 +7,6 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
-
     public class ServiceImageController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -33,6 +31,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Service Provider")]
         public void Post(ServiceImage serviceImage)
         {
             if (ModelState.IsValid)
@@ -40,12 +39,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Service Provider")]
         public void Put(ServiceImage serviceImage)
         {
             if (ModelState.IsValid)
                 _handler.EditServiceImage(serviceImage);
         }
 
+        [Authorize(Roles = "Service Provider")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

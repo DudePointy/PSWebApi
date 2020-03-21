@@ -5,7 +5,7 @@ using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserSkillController : ControllerBase

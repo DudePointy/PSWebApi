@@ -5,7 +5,6 @@ using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class SubCategoryController : ControllerBase
@@ -31,6 +30,7 @@ namespace WebApi.Controllers
             return _handler.SubCategoryDetails(id);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public void Post(SubCategory subCategory)
         {
@@ -39,12 +39,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public void Put(SubCategory subCategory)
         {
             if (ModelState.IsValid)
                 _handler.EditSubCategory(subCategory);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
